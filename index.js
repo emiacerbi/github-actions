@@ -1,0 +1,1 @@
+console.log('Repo to practice Github Actions')
