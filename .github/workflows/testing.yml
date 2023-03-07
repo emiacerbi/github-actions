@@ -22,6 +22,10 @@ jobs:
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
+      - name: commit joined
+        env:
+          COMMIT_MESSAGES: ${{ toJson(join(github.event.commits.*.message, ' ')) }}
+        run: echo "$COMMIT_MESSAGES"
       - name: echo test
         if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.message, ' '), 'echo')}}
         env:
