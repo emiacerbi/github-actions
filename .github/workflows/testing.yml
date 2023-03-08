@@ -1,38 +1,19 @@
-name: Testing stuff
-
+# example 1: on push to master
+name: Bump version
 on:
   push:
     branches:
       - main
-
 jobs:
-  tag_release:
-    runs-on: ubuntu-20.04
-      # - uses: actions/checkout@v2
-      # - name: github context
-      #   env:
-      #     GITHUB_CONTEXT: ${{ toJson(github) }}
-      #   run: echo "$GITHUB_CONTEXT"
-      # - name: commits
-      #   env:
-      #     COMMITS: ${{ toJson(github.event.commits) }}
-      #   run: echo "$COMMITS"
-      # - name: commit messages
-      #   env:
-      #     COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-      #   run: echo "$COMMIT_MESSAGES"
-      # - name: commit joined
-      #   env:
-      #     COMMIT_MESSAGES: ${{ toJson(join(github.event.commits.*.message, ' ')) }}
-      #   run: echo "$COMMIT_MESSAGES"
-      # - name: echo test
-      #   if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.message, ' '), 'echo') }}
-      #   env:
-      #     COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-      #   run: echo "$COMMIT_MESSAGES"
+  build:
+    runs-on: ubuntu-22.04
     steps:
-      - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@eca2b69f9e2c24be7decccd0f15fdb1ea5906598
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: patch
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: '0'
+
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@1.55.0 # Don't use @master unless you're happy to test the latest version
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
