@@ -1,1 +1,1 @@
-console.log('Repo to practice Github Actions')
+console.log('Repo to practice Github Actions, now with permission.')
